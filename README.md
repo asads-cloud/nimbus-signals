@@ -60,10 +60,10 @@ standards, including:
 
 ### **Key Components**
 
--   **Auth:** IAM Roles for Service Accounts (IRSA)\
--   **Runtime:** Kubernetes + Horizontal scalability\
--   **State:** Fully stateless, infra recreated via Terraform\
--   **Delivery model:** Git-driven environment promotion\
+-   **Auth:** IAM Roles for Service Accounts (IRSA)
+-   **Runtime:** Kubernetes + Horizontal scalability
+-   **State:** Fully stateless, infra recreated via Terraform
+-   **Delivery model:** Git-driven environment promotion
 -   **Observability:** End-to-end metrics and dashboards
 
 ------------------------------------------------------------------------
@@ -187,6 +187,94 @@ platform:
 -   🔐 Multi-region deployments (Terraform + Argo CD app-of-apps)
 
 ------------------------------------------------------------------------
+
+
+## Cleanup & Cost Management
+
+Nimbus Signals runs on AWS EKS, which can accumulate cost if left running.  
+This project uses **Terraform as the single source of truth** for provisioning and destroying infrastructure.
+
+###  Core Principles
+
+- **Terraform is authoritative**  
+  All resources should be created and destroyed through Terraform, avoid using the AWS console for modification.
+
+- **Avoid orphaned resources**  
+  Double-check no leftover cloud components remain after teardown:
+  - EKS clusters / node groups  
+  - Load balancers (ELB/NLB/ALB)  
+  - ECR images  
+  - Auto Scaling Groups  
+  - CloudWatch log groups  
+
+- **Short-lived environments**  
+  Spin up the cluster only when needed; destroy after testing or demo work.
+
+---
+
+###  Standard Teardown Flow
+
+When you're finished with a dev or demo environment:
+
+1. **Navigate to the Terraform environment directory:**
+
+    ```bash
+    cd terraform/envs/dev
+    ```
+
+2. **Review what Terraform will destroy:**
+
+    ```bash
+    terraform plan -destroy
+    ```
+
+3. **Tear down the stack:**
+
+    ```bash
+    terraform destroy
+    ```
+
+This removes:
+- EKS cluster + node groups  
+- Node IAM roles / instance profiles (if managed here)  
+- ECR repositories (optional based on module settings)  
+- Networking components (VPC, subnets, gateways) if provisioned by the module  
+
+---
+
+###  Manual Checks (Post-Destroy)
+
+After `terraform destroy` completes, verify the following in AWS:
+
+- **EKS:** No clusters or node groups named `nimbus-*`  
+- **EC2 → Load Balancers:** No leftover NLB/ALB/ELB resources  
+- **EC2 → Auto Scaling:** No lingering ASGs  
+- **ECR:** Expected repositories removed  
+- **CloudWatch Logs:** Clean up unused log groups
+
+If anything remains, update the Terraform modules so it is managed and destroyed automatically next time.
+
+---
+
+###  Cost-Saving Defaults
+
+Terraform modules and Kubernetes configuration follow:
+
+- **Small instance types** for non-production workloads (e.g. `t3.small`, `t3.medium`)  
+- **Low node counts** for dev (typically 2–3 nodes)  
+- **Minimal addons** to reduce spend (only the essentials)  
+- **On-demand nodes** for simplicity (spot integration optional later)  
+
+---
+
+As Nimbus Signals grows, this section can be expanded or moved into a dedicated cleanup guide under:
+
+
+    
+>terraform/modules/eks/docs/cleanup.md
+    
+---
+
 
 ## 🧾 License
 
