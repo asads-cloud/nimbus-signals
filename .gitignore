@@ -39,3 +39,10 @@ Thumbs.db
 # ----- misc -----
 dist/
 build/
+
+# Logs
+*.log
+.aws/
+.kube/
+
+
