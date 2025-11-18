@@ -1,0 +1,58 @@
+# Number of replicas for price-service
+replicaCount: 1
+
+image:
+  repository: <AWS_ACCOUNT_ID>.dkr.ecr.eu-west-1.amazonaws.com/nimbus-signals/price-service
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+# Pod-level settings
+env:
+  symbols: "BTC,ETH"
+  fetchIntervalSeconds: 15
+  windowSize: 120
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 200m
+    memory: 256Mi
+
+# ClusterIP service configuration
+service:
+  type: ClusterIP
+  port: 8080
+
+# ServiceMonitor configuration
+serviceMonitor:
+  enabled: false
+  interval: 15s
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+httpRoute:
+  enabled: false
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
