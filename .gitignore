@@ -45,4 +45,5 @@ build/
 .aws/
 .kube/
 
+apps/price-service/helm/price-service/values.dev.local.yaml
 
