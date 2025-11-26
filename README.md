@@ -1,118 +1,121 @@
 # 📡 Nimbus Signals
 
-**Nimbus Signals** is a cloud-native, production-aligned **real-time
-price intelligence platform** engineered using modern **DevOps, GitOps,
-platform engineering, and Kubernetes** practices.
+**Nimbus Signals** is a production-aligned, cloud-native **real-time price intelligence platform** built with Terraform → EKS → Argo CD → GitHub Actions.
 
-It continuously ingests BTC/ETH price data, exposes operational and
-business metrics, and runs end-to-end on a fully automated **Terraform →
-EKS → Argo CD → GitHub Actions** delivery pipeline.
+It demonstrates practical **platform engineering**, **GitOps**, **Kubernetes operations**, and **cloud automation** using modern 2025 standards.  
+The platform continuously ingests BTC/ETH prices, exposes operational + business metrics, and runs end‑to‑end through an automated and declarative delivery pipeline.
 
-This project demonstrates how to design, deploy, and operate a
-**resilient microservice platform** using 2025-grade cloud engineering
-standards, including:
+---
 
--   Immutable infrastructure
--   GitOps-driven deployments
--   Observability-first design
--   Secure AWS-native CI/CD
--   Modular, scalable infrastructure as code
+## 🎯 Why This Project Matters
 
-------------------------------------------------------------------------
+Nimbus Signals shows that I can:
+
+- Design and operate a **real Kubernetes platform** on AWS  
+- Build modular **Terraform IaC** (VPC, EKS, IAM, ECR, networking)  
+- Implement **GitOps with Argo CD** to drive cluster state from Git  
+- Build secure **AWS-native CI/CD pipelines** with GitHub Actions + OIDC  
+- Deploy a real microservice with **metrics, probes, dashboards, and alerts**  
+- Run production-style infrastructure with observability baked in  
+
+This project reflects the day-to-day work of **Cloud, DevOps, and Platform Engineers**.
+
+---
 
 ## ⚙️ Core Capabilities
 
-| Category                   | Description                                                                 |
-|---------------------------|-----------------------------------------------------------------------------|
-| **Real-Time Data Service** | FastAPI microservice scraping live BTC/ETH prices with probe endpoints + structured logs |
-| **Metrics & Telemetry**    | Prometheus metrics for application, business KPIs, and scrape health        |
-| **GitOps Delivery**        | Fully declarative deployments managed by Argo CD                             |
-| **Infrastructure as Code** | Terraform modules for VPC, EKS, node groups, IAM, ECR, networking            |
-| **Automated CI/CD**        | GitHub Actions pipelines for build, test, image publishing, and chart updates |
-| **Observability Stack**    | kube-prometheus-stack with Grafana dashboards                                |
-| **Scalable Kubernetes Runtime** | Namespaced EKS architecture for application, monitoring, and platform components |
+| Category | Description |
+|---------|-------------|
+| **Real-Time Data Service** | FastAPI microservice scraping live BTC/ETH prices with structured logs + probe endpoints |
+| **Metrics & Telemetry** | Prometheus metrics for app health, scrape freshness, and business KPIs |
+| **GitOps Delivery** | Declarative deployments via Argo CD; Git = source of truth |
+| **Infrastructure as Code** | Terraform modules for VPC, EKS, node groups, IAM, ECR, networking |
+| **Automated CI/CD** | GitHub Actions: build → test → image publish → Helm/Chart updates |
+| **Observability Stack** | kube-prometheus-stack + Grafana dashboards |
+| **Scalable Kubernetes Runtime** | Namespaced EKS layout for app, monitoring, and platform components |
 
-> 💡 **Nimbus Signals is engineered as a compact yet realistic
-> representation of a production microservice platform, suitable for
-> real-world extension, team handoffs, and platform-engineering
-> conversations.**
+> 💡 Nimbus Signals is intentionally engineered as a **compact yet realistic production microservice platform** that mirrors how real teams deliver and operate cloud workloads.
 
-------------------------------------------------------------------------
+---
 
 ## 🏗️ Architecture Overview
 
-                 ┌──────────────────────────┐
-                 │ GitHub Actions (CI/CD)   │
-                 └────────────┬─────────────┘
-                              │  Build/Test
-                              ▼
-                      Amazon ECR (Images)
-                              │
-                              ▼
-                    Argo CD (GitOps Control)
-                              │ Sync
-                              ▼
-                    AWS EKS (Workload Runtime)
-            ┌──────────────┬───────────────┬─────────────┐
-            │ price-service │  Monitoring   │   Argo CD    │
-            │ (FastAPI)     │ (Prom+Grafana)│   Control    │
-            └──────────────┴───────────────┴─────────────┘
+```
+┌──────────────────────────┐
+│ GitHub Actions (CI/CD)   │
+└────────────┬─────────────┘
+             │ Build/Test
+             ▼
+      Amazon ECR (Images)
+             │
+             ▼
+     Argo CD (GitOps Control)
+             │ Sync
+             ▼
+     AWS EKS (Workload Runtime)
+ ┌──────────────┬───────────────┬─────────────┐
+ │ price-service│  Monitoring   │   Argo CD    │
+ │ (FastAPI)    │ (Prom+Grafana)│   Control    │
+ └──────────────┴───────────────┴─────────────┘
+```
 
-### **Key Components**
+### Key Components
 
--   **Auth:** IAM Roles for Service Accounts (IRSA)
--   **Runtime:** Kubernetes + Horizontal scalability
--   **State:** Fully stateless, infra recreated via Terraform
--   **Delivery model:** Git-driven environment promotion
--   **Observability:** End-to-end metrics and dashboards
+- **Auth:** IRSA (IAM Roles for Service Accounts)  
+- **Runtime:** Kubernetes with horizontal scalability  
+- **State:** Fully stateless; infra recreated via Terraform  
+- **Delivery:** GitOps-driven environment promotion  
+- **Observability:** End‑to‑end metrics and dashboards  
 
-------------------------------------------------------------------------
+---
 
 ## 🧬 Tech Stack
 
-| Area           | Technologies                               |
-|----------------|---------------------------------------------|
-| Application    | Python 3.12, FastAPI                        |
-| Containers     | Docker, Amazon ECR                          |
-| Orchestration  | Kubernetes (AWS EKS)                        |
-| IaC            | Terraform (VPC, EKS, ECR, IAM)              |
-| GitOps         | Argo CD                                     |
-| Monitoring     | Prometheus Operator, Grafana                |
-| CI/CD          | GitHub Actions                              |
-| Tooling        | awscli, kubectl, helm, terraform, docker    |
+| Area | Technologies |
+|------|--------------|
+| Application | Python 3.12, FastAPI |
+| Containers | Docker, Amazon ECR |
+| Orchestration | Kubernetes (AWS EKS) |
+| IaC | Terraform (VPC, EKS, ECR, IAM) |
+| GitOps | Argo CD |
+| Monitoring | Prometheus Operator, Grafana |
+| CI/CD | GitHub Actions |
+| Tooling | awscli, kubectl, helm, terraform, docker |
 
-------------------------------------------------------------------------
+---
 
 ## 📁 Repository Structure
 
-    nimbus-signals/
-      apps/
-        price-service/       # FastAPI service, Dockerfile, metrics
-      terraform/
-        envs/                # Per-environment entrypoints (dev, prod)
-        modules/
-          eks/               # EKS cluster, node groups, IAM, ECR, VPC
-      platform/
-        argocd/              # GitOps applications
-        monitoring/          # kube-prometheus-stack config
-      .github/
-        workflows/           # CI/CD automation
-      README.md
+```
+nimbus-signals/
+  apps/
+    price-service/       # FastAPI service + Dockerfile + metrics
+  terraform/
+    envs/                # Environment entrypoints (dev, prod)
+    modules/
+      eks/               # EKS cluster, node groups, IAM, ECR, VPC
+  platform/
+    argocd/              # GitOps applications
+    monitoring/          # Prometheus + Grafana config
+  .github/
+    workflows/           # CI/CD automation
+  README.md
+```
 
-------------------------------------------------------------------------
+---
 
 ## 🚀 Getting Started
 
-### 🧩 1. Clone the repository
+### 1. Clone
 
-``` bash
-git clone https://github.com/<your-username>/nimbus-signals.git
+```bash
+git clone https://github.com/asads-cloud/nimbus-signals.git
 cd nimbus-signals
 ```
 
-### 🧩 2. Verify your toolchain
+### 2. Verify Toolchain
 
-``` bash
+```bash
 aws --version
 terraform -version
 kubectl version --client
@@ -121,165 +124,99 @@ docker --version
 python --version
 ```
 
-### 🧩 3. Authenticate to AWS
+### 3. Authenticate to AWS
 
-``` bash
+```bash
 aws configure
 aws sts get-caller-identity
 ```
 
-### 🧩 4. Deploy Infrastructure
+### 4. Deploy Infrastructure
 
-    cd terraform/envs/dev
-    terraform init
-    terraform apply
+```bash
+cd terraform/envs/dev
+terraform init
+terraform apply
+```
 
-### 🧩 5. Deploy Platform Components (GitOps)
+### 5. Deploy Platform Components (GitOps)
 
-Argo CD automatically syncs:
+Argo CD auto-syncs:
 
--   price-service
--   kube-prometheus-stack
--   Argo CD itself
+- price-service  
+- kube-prometheus-stack  
+- Argo CD itself  
 
-Cluster state is always driven from Git.
+All Kubernetes state is **driven from Git**.
 
-------------------------------------------------------------------------
+---
 
 ## 📊 Observability
 
-Nimbus Signals ships with:
+Nimbus Signals exposes:
 
--   Application-level metrics
--   Latency, errors, scrape freshness
--   Resource usage (CPU/memory)
--   Cluster-level Prometheus metrics
--   Pre-built Grafana dashboards
+- Application latency, errors, throughput  
+- Scrape freshness + scheduler delays  
+- Business metrics (price spread, movement, frequency)  
+- Cluster metrics: CPU, memory, node status  
+- Pre-built Grafana dashboards  
 
-All metrics are automatically scraped through ServiceMonitors.
+All scraped via ServiceMonitors.
 
-------------------------------------------------------------------------
+---
 
 ## 🧠 Design Principles
 
--   **Git as the source of truth**: Argo CD enforces declarative
-    infra\
--   **Security-aligned**: IRSA, least-privilege IAM, no long-lived
-    secrets\
--   **Modular IaC**: Terraform split into composable modules\
--   **Operational visibility**: metrics at every layer\
--   **Production-centred structure**: mirrors real platform
-    engineering workflows
+- **Git as the single source of truth**  
+- **Security-first:** IRSA, least privilege IAM, no static secrets  
+- **Modular IaC:** Terraform modules with clean separation  
+- **Observability everywhere**  
+- **Production-minded architecture**  
 
-------------------------------------------------------------------------
+---
 
 ## 🧩 Future Expansion
 
-Nimbus Signals can be extended into a broader market-data and analytics
-platform:
-
--   🧮 Additional asset classes & exchanges
--   📈 Historical time-series storage (Timestream / Mimir /
-    VictoriaMetrics)
--   🛂 API gateway integration for rate limiting & auth
--   ☸️ Autoscaling via HPA/KEDA
--   📦 Additional microservices (alerts, aggregators, enrichers)
--   🔐 Multi-region deployments (Terraform + Argo CD app-of-apps)
-
-------------------------------------------------------------------------
-
-
-## Cleanup & Cost Management
-
-Nimbus Signals runs on AWS EKS, which can accumulate cost if left running.  
-This project uses **Terraform as the single source of truth** for provisioning and destroying infrastructure.
-
-###  Core Principles
-
-- **Terraform is authoritative**  
-  All resources should be created and destroyed through Terraform, avoid using the AWS console for modification.
-
-- **Avoid orphaned resources**  
-  Double-check no leftover cloud components remain after teardown:
-  - EKS clusters / node groups  
-  - Load balancers (ELB/NLB/ALB)  
-  - ECR images  
-  - Auto Scaling Groups  
-  - CloudWatch log groups  
-
-- **Short-lived environments**  
-  Spin up the cluster only when needed; destroy after testing or demo work.
+- Additional assets/exchanges  
+- Historical time-series DB (Timestream, VictoriaMetrics)  
+- HPA/KEDA autoscaling  
+- Gateway/API-level auth + rate limiting  
+- Multi-service architecture (alerts, enrichers, aggregators)  
+- Multi-region deployments  
 
 ---
 
-###  Standard Teardown Flow
+## 🧽 Cleanup & Cost Management
 
-When you're finished with a dev or demo environment:
+EKS clusters incur cost, use Terraform to create/destroy everything.
 
-1. **Navigate to the Terraform environment directory:**
+### Teardown
 
-    ```bash
-    cd terraform/envs/dev
-    ```
+```bash
+cd terraform/envs/dev
+terraform plan -destroy
+terraform destroy
+```
 
-2. **Review what Terraform will destroy:**
+Verify no leftover:
 
-    ```bash
-    terraform plan -destroy
-    ```
+- EKS clusters / node groups  
+- Load balancers  
+- ASGs  
+- ECR images  
+- CloudWatch log groups  
 
-3. **Tear down the stack:**
-
-    ```bash
-    terraform destroy
-    ```
-
-This removes:
-- EKS cluster + node groups  
-- Node IAM roles / instance profiles (if managed here)  
-- ECR repositories (optional based on module settings)  
-- Networking components (VPC, subnets, gateways) if provisioned by the module  
+Terraform is authoritative, update modules if anything is left unmanaged.
 
 ---
-
-###  Manual Checks (Post-Destroy)
-
-After `terraform destroy` completes, verify the following in AWS:
-
-- **EKS:** No clusters or node groups named `nimbus-*`  
-- **EC2 → Load Balancers:** No leftover NLB/ALB/ELB resources  
-- **EC2 → Auto Scaling:** No lingering ASGs  
-- **ECR:** Expected repositories removed  
-- **CloudWatch Logs:** Clean up unused log groups
-
-If anything remains, update the Terraform modules so it is managed and destroyed automatically next time.
-
----
-
-###  Cost-Saving Defaults
-
-Terraform modules and Kubernetes configuration follow:
-
-- **Small instance types** for non-production workloads (e.g. `t3.small`, `t3.medium`)  
-- **Low node counts** for dev (typically 2–3 nodes)  
-- **Minimal addons** to reduce spend (only the essentials)  
-- **On-demand nodes** for simplicity (spot integration optional later)  
-
----
-
-As Nimbus Signals grows, this section can be expanded or moved into a dedicated cleanup guide under:
-
-
-    
->terraform/modules/eks/docs/cleanup.md
-    
----
-
 
 ## 🧾 License
 
-MIT: see [LICENSE](./LICENSE).
+MIT — see [LICENSE](./LICENSE).
 
 ---
 
-> **Maintained by:** Asad Rana: Cloud Engineer w/ AWS & Terraform | Specialising in Statistics, Data & Security
+## 👤 Author
+
+Designed and built by **Asad Rana**\
+Cloud & Platform Engineer | AWS, Terraform, GitOps, CI/CD
